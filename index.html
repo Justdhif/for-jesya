@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Doa untuk Jelita</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@400;600&display=swap");
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        background: linear-gradient(135deg, #9ec9ff 0%, #d0e8f4 100%);
+        font-family: "Montserrat", sans-serif;
+        color: #2b3d5a;
+        overflow-x: hidden;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position: relative;
+      }
+
+      .hearts {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 1;
+      }
+
+      .heart {
+        position: absolute;
+        opacity: 0;
+        animation: float 6s ease-in infinite;
+      }
+
+      @keyframes float {
+        0% {
+          transform: translateY(0) rotate(0deg);
+          opacity: 1;
+        }
+        100% {
+          transform: translateY(-1000px) rotate(720deg);
+          opacity: 0;
+        }
+      }
+
+      .container {
+        max-width: 800px;
+        margin: 2rem auto;
+        padding: 2rem;
+        background-color: rgba(255, 255, 255, 0.9);
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        position: relative;
+        z-index: 2;
+        text-align: center;
+      }
+
+      h1 {
+        font-family: "Dancing Script", cursive;
+        font-size: 3rem;
+        color: #4a6b8a;
+        margin-bottom: 1rem;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .subtitle {
+        font-size: 1.2rem;
+        margin-bottom: 2rem;
+        color: #5a5a7d;
+      }
+
+      .photo-frame {
+        width: 200px;
+        height: 200px;
+        margin: 0 auto 2rem;
+        border-radius: 50%;
+        border: 10px solid #fff;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        overflow: hidden;
+        position: relative;
+        background-color: #d7e3f8;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .photo-frame img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .photo-placeholder {
+        font-size: 3rem;
+        color: #4a6b8a;
+        text-align: center;
+        padding: 20px;
+      }
+
+      .message {
+        font-size: 1.1rem;
+        line-height: 1.8;
+        margin-bottom: 2rem;
+        text-align: left;
+        white-space: pre-line;
+      }
+
+      .signature {
+        font-family: "Dancing Script", cursive;
+        font-size: 2rem;
+        color: #4a6b8a;
+        margin-top: 1rem;
+      }
+
+      .gallery {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 15px;
+        margin: 2rem 0;
+      }
+
+      .gallery-item {
+        width: 150px;
+        height: 150px;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+        transition: transform 0.3s ease;
+        background-color: #d7e3f8;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .gallery-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .gallery-item:hover {
+        transform: scale(1.05);
+      }
+
+      .gallery-item .photo-placeholder {
+        font-size: 1.5rem;
+        padding: 10px;
+      }
+
+      .btn {
+        background: linear-gradient(to right, #4a6b8a, #9ec9ff);
+        color: white;
+        border: none;
+        padding: 12px 25px;
+        border-radius: 50px;
+        font-size: 1rem;
+        cursor: pointer;
+        margin: 1rem 0;
+        box-shadow: 0 4px 15px rgba(74, 107, 138, 0.4);
+        transition: all 0.3s ease;
+        font-weight: 600;
+      }
+
+      .btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 20px rgba(74, 107, 138, 0.6);
+      }
+
+      .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.8);
+        z-index: 100;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .modal-content {
+        background-color: white;
+        padding: 2rem;
+        border-radius: 15px;
+        max-width: 500px;
+        width: 90%;
+        text-align: center;
+        position: relative;
+      }
+
+      .close-modal {
+        position: absolute;
+        top: 10px;
+        right: 15px;
+        font-size: 1.5rem;
+        cursor: pointer;
+        color: #4a6b8a;
+      }
+
+      .music-control {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background-color: white;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+        cursor: pointer;
+        z-index: 10;
+      }
+
+      .music-control i {
+        font-size: 1.5rem;
+        color: #4a6b8a;
+      }
+
+      @media (max-width: 768px) {
+        h1 {
+          font-size: 2.5rem;
+        }
+
+        .container {
+          padding: 1.5rem;
+          margin: 1rem;
+        }
+
+        .gallery-item {
+          width: 120px;
+          height: 120px;
+        }
+
+        .gallery-item img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+      }
+    </style>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+  </head>
+  <body>
+    <div class="hearts" id="hearts"></div>
+
+    <div class="container">
+      <h1>Doa untuk Jelita</h1>
+      <p class="subtitle">Jelita Febria Kansyaila</p>
+
+      <div class="photo-frame">
+        <!-- To replace with actual image: -->
+        <img src="images/jelita.jpg" alt="Jelita Febria Kansyaila" />
+      </div>
+
+      <div class="message">
+        Doa untuk liaa yang Masih Ragu Tuhanku, di sela sunyi malam yang kupeluk
+        tanpa suara, ada satu nama yang kutitipkan dalam doa Jelita Febria
+        Kansyaila, bukan sekadar nama indah, tapi jiwa yang kusebut dengan penuh
+        harap dan cinta. Ia masih mencari arah, masih menenun keberanian di
+        antara kabut tanya. Aku tahu, langkahnya belum utuh, dan hatinya masih
+        belajar percaya pada dirinya sendiri. Tapi aku tak ingin tergesa, karena
+        cinta sejati tak pernah menuntut waktu untuk terburu. Tuhanku, bila
+        Jelita sedang berdamai dengan masa lalu, lembutkanlah jalan yang ia
+        tapaki. Bila ia sedang ragu pada cermin dirinya, tunjukkan bahwa ia
+        sudah cukup sejak awal, dan selalu. Aku di sini, bukan sekadar menanti,
+        tapi menjadi rumah yang tetap membuka pintu, menyambut setiap getar
+        langkahnya, meski hanya setengah hati, meski belum pasti. Biarlah waktu
+        menjadi sahabatnya, biarlah Engkau yang menenangkan dadanya, dan izinkan
+        aku menjadi laki-laki yang mencintainya dengan sabar yang tak
+        berkesudahan. Jika nanti Jelita Febria Kansyaila datang, bukan karena
+        panggilanku, tapi karena ia telah menemukan cahaya dalam dirinya, maka
+        cinta ini akan menyambutnya dengan pelukan yang diciptakan dari doa-doa
+        yang tak pernah putus sejak pertama namanya kusimpan dalam sujud.
+      </div>
+
+      <div class="signature">Untuk Jelita</div>
+
+      <button class="btn" id="specialMessageBtn">Pesan Khusus</button>
+
+      <div class="gallery">
+        <div class="gallery-item">
+          <img src="images/1.jpg" alt="Jelita Febria Kansyaila" />
+        </div>
+        <div class="gallery-item">
+          <img src="images/2.jpg" alt="Jelita Febria Kansyaila" />
+        </div>
+        <div class="gallery-item">
+          <img src="images/3.jpg" alt="Jelita Febria Kansyaila" />
+        </div>
+        <div class="gallery-item">
+          <img src="images/4.jpg" alt="Jelita Febria Kansyaila" />
+        </div>
+      </div>
+    </div>
+
+    <div class="modal" id="specialMessageModal">
+      <div class="modal-content">
+        <span class="close-modal" id="closeModal">&times;</span>
+        <h2
+          style="
+            color: #4a6b8a;
+            font-family: 'Dancing Script', cursive;
+            margin-bottom: 1rem;
+          "
+        >
+          Untuk Jelita
+        </h2>
+        <p>
+          Setiap doa yang kupanjatkan adalah tentangmu, setiap harapan yang
+          kurajut adalah untuk kebahagiaanmu.
+        </p>
+        <p>
+          Aku akan selalu menanti dengan sabar, karena engkau layak untuk semua
+          kebaikan di dunia ini.
+        </p>
+        <div style="font-size: 3rem; color: #4a6b8a; margin: 1rem 0">
+          🌙✨💙
+        </div>
+      </div>
+    </div>
+
+    <div class="music-control" id="musicControl">
+      <i class="fas fa-music"></i>
+      <audio id="bgMusic" loop>
+        <source
+          src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
+          type="audio/mpeg"
+        />
+        <!-- Replace with your preferred music -->
+      </audio>
+    </div>
+
+    <script>
+      // Create floating hearts
+      function createHearts() {
+        const heartsContainer = document.getElementById("hearts");
+        const colors = ["#9ec9ff", "#d0e8f4", "#4a6b8a", "#b6c9ff", "#d7e3f8"];
+
+        for (let i = 0; i < 20; i++) {
+          const heart = document.createElement("div");
+          heart.classList.add("heart");
+          heart.innerHTML = '<i class="fas fa-heart"></i>';
+          heart.style.color = colors[Math.floor(Math.random() * colors.length)];
+          heart.style.left = Math.random() * 100 + "vw";
+          heart.style.top = Math.random() * 100 + "vh";
+          heart.style.fontSize = Math.random() * 20 + 10 + "px";
+          heart.style.animationDuration = Math.random() * 5 + 5 + "s";
+          heart.style.animationDelay = Math.random() * 3 + "s";
+          heartsContainer.appendChild(heart);
+        }
+      }
+
+      // Modal functionality
+      const modal = document.getElementById("specialMessageModal");
+      const btn = document.getElementById("specialMessageBtn");
+      const closeBtn = document.getElementById("closeModal");
+
+      btn.addEventListener("click", () => {
+        modal.style.display = "flex";
+      });
+
+      closeBtn.addEventListener("click", () => {
+        modal.style.display = "none";
+      });
+
+      window.addEventListener("click", (e) => {
+        if (e.target === modal) {
+          modal.style.display = "none";
+        }
+      });
+
+      // Music control
+      const musicControl = document.getElementById("musicControl");
+      const bgMusic = document.getElementById("bgMusic");
+      let isPlaying = false;
+
+      musicControl.addEventListener("click", () => {
+        if (isPlaying) {
+          bgMusic.pause();
+          musicControl.innerHTML = '<i class="fas fa-music"></i>';
+        } else {
+          bgMusic.play();
+          musicControl.innerHTML = '<i class="fas fa-pause"></i>';
+        }
+        isPlaying = !isPlaying;
+      });
+
+      // Initialize everything when page loads
+      window.addEventListener("DOMContentLoaded", () => {
+        createHearts();
+      });
+    </script>
+  </body>
+</html>
